@@ -1,29 +1,35 @@
 package entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import model.Reservation;
+import model.Room;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
 @NoArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Table(name = "guests")
+@EqualsAndHashCode(callSuper = true)
 public class Guest extends Client {
 
-    /* provides one id arg constructor for method empty
-    that used in services to return not found(non-exist) entity */
-    @NonNull
-    private long id;
+//    /* provides one id arg constructor for method empty
+//    that used in services to return not found(non-exist) entity */
+//    @NonNull
+//    private long id;
     private boolean clubMember;
-    private ArrayList<Reservation> reservations;
 
-//    public static Guest empty() {
-//        return new Guest(NO_ID);
-//    }
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Room room;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "guest")
+    private List<Reservation> reservations = new ArrayList<>();
+
+
+
 }

@@ -20,6 +20,9 @@
         <property name="hibernate.current_session_context_class">thread</property>
         <!-- Automatically creates tables if not exist -->
         <property name="hibernate.hbm2ddl.auto">update</property>
+        <!-- Beautify -->
+        <property name="format_sql">true</property>
+
 
     </session-factory>
 
