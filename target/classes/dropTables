@@ -1,3 +1,3 @@
-DROP TABLE IF EXISTS workers_requests, requests_workers, requests_rooms, rooms_requests,
+DROP TABLE IF EXISTS employees_requests, requests_employees, requests_rooms, rooms_requests,
     rooms_guests,
-    requests, rooms, workers, guests, reservations, persons CASCADE;
+    requests, rooms, employees, guests, reservations, persons CASCADE;

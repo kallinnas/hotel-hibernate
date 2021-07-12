@@ -3,8 +3,7 @@ package entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import model.Reservation;
-import model.Room;
+import model.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -27,9 +26,14 @@ public class Guest extends Client {
     @ManyToOne(cascade = CascadeType.ALL)
     private Room room;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "guest")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "guest", fetch = FetchType.LAZY)
     private List<Reservation> reservations = new ArrayList<>();
 
 
-
+    public Request createRequest(RequestType type) {
+        Request request = new Request(type);
+        request.setName(type.name);
+        OperatorRequests.addRequest(request);
+        return request;
+    }
 }

@@ -42,7 +42,7 @@ public class Person {
     @AnyMetaDef(idType = "long", metaType = "int",
             metaValues = {
                     @MetaValue(value = "1", targetEntity = Guest.class),
-                    @MetaValue(value = "2", targetEntity = Worker.class),
+                    @MetaValue(value = "2", targetEntity = Employee.class),
             })
     @JoinColumn(name = "client_id")
     @Cascade(CascadeType.ALL)
@@ -59,7 +59,7 @@ public class Person {
             this.client = new Guest();
             this.client.setId(0);
         } else if (role == 2) {
-            this.client = new Worker();
+            this.client = new Employee();
             this.client.setId(0);
         }
     }

@@ -1,6 +1,10 @@
 import db.HibernateUtil;
-import db.ValidationUtils;
+import db.dao.*;
+import entity.Employee;
+import entity.Guest;
 import entity.Person;
+import model.Request;
+import model.RequestType;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -11,36 +15,36 @@ import java.io.IOException;
 public class AppRunner {
     public static void main(String[] args) {
         Person person1 = new Person("Serhii", "Kalinichenko", "k@gmail.com", 1000, 1);
-//        Person person2 = new Person("Muha", "Abu", "ma@kd.com", 50, 2);
+        Person person2 = new Person("Muha", "Abu", "ma@kd.com", 50, 2);
 //        Person person3 = new Person("vik", "afek", "asdfasdf@kd.il", 50, 2);
 //        Person person4 = new Person("Zull", "Tofer", "skach@kd.il", 50, 2);
 
-        persistPerson(person1);
+        PersonDao personDao = new PersonDaoImpl();
+        GuestDao guestDao = new GuestDaoImpl();
+        EmployeeDao employeeDao = new EmployeeDaoImpl();
+        RequestDao requestDao = new RequestDaoImpl();
+//
+//        personDao.persistPerson(person1);
+//        personDao.persistPerson(person2);
+
+        Guest g = guestDao.getGuestById(1);
+        Employee e = employeeDao.getEmployeeById(1);
+
+        Request request = g.createRequest(RequestType.ROOM_SERVICE);
+        Request request1 = g.createRequest(RequestType.CHECK_IN);
+
+        requestDao.persistRequest(request);
+        requestDao.persistRequest(request1);
+
+        Thread threadE = new Thread(e);
+        threadE.start();
+
+
 
 //        dropTables();
 
     }
 
-    private static void persistPerson(Person person) {
-        if (!ValidationUtils.hasViolation(person)) {
-
-            Session session = HibernateUtil.getHibernateSession();
-            try {
-                Transaction transaction = session.beginTransaction();
-
-                session.persist(person);
-
-                Person guest = session.get(Person.class, 3L);
-                System.out.println(guest);
-                transaction.commit();
-            } finally {
-                session.close();
-            }
-
-        } else ValidationUtils.validate(person);
-
-
-    }
 
     private static void dropTables() {
         String line;
@@ -51,7 +55,7 @@ public class AppRunner {
             Transaction transaction = session.beginTransaction();
             BufferedReader bufferedReader = new BufferedReader(
                     new FileReader("src/main/resources/dropTables"));
-            while ((line = bufferedReader.readLine()) != null){
+            while ((line = bufferedReader.readLine()) != null) {
                 System.out.println(line);
                 sb.append(line);
             }

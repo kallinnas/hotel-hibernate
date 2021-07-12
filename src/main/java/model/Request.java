@@ -1,28 +1,37 @@
 package model;
 
-import entity.Worker;
+import entity.Employee;
 import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
 @Entity
+@RequiredArgsConstructor
 @Table(name = "requests")
 public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.REFRESH, CascadeType.REMOVE})
+    @NonNull
+    @Transient
+    private RequestType type;
+
+    private String name;
+
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.REFRESH})
     private Room room;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name = "worker_id")
-    private Worker worker;
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
 
-    private LocalDateTime start;
+    private final LocalDateTime start = LocalDateTime.now();
     private LocalDateTime end;
 
-    private double price;
+
 }
