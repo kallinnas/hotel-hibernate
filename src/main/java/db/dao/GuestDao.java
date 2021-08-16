@@ -7,5 +7,5 @@ public interface GuestDao {
 
     void persistGuest(Guest guest);
 
-
+    void update(Guest guest);
 }

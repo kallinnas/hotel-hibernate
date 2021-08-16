@@ -1,17 +1,12 @@
 package entity;
 
-import db.dao.RequestDaoImpl;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import model.Department;
-import model.OperatorRequests;
 import model.Request;
+import operator.OperatorO;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +15,15 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "employees")
 @EqualsAndHashCode(callSuper = true)
-public class Employee extends Client implements RequestObserver, Runnable {
+public class Employee extends Client implements Runnable{
 
+    private long id;
     @NotNull(message = "Department must be set!")
+    @Enumerated(EnumType.STRING)
     private Department department;
+
+    @NonNull
+    private boolean isWorking;
 
     @Transient //Every non-static, non-final entity field is persistent by default in Hibernate or JPA
     private volatile Request request;
@@ -32,44 +32,28 @@ public class Employee extends Client implements RequestObserver, Runnable {
      *  mappedBy specifically is not allowing to hibernate create additional
      * tables between worker-request entities */
     @ToString.Exclude
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee"/*, fetch = FetchType.LAZY*/)
     private List<Request> requests = new ArrayList<>();
 
+    public Employee(long id) {
+        super(id);
+    }
+
     @Override
-//    @SneakyThrows
-    public void run() {
-        while (!OperatorRequests.requests.isEmpty()) {
-            request = OperatorRequests.requests.get(0);
-            handleRequest();
-            System.out.println(request + " was made by employee id#" + getId());
-            System.out.println(LocalDateTime.now() + "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            try {
-                Thread.sleep(request.getType().timeLimit);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            System.out.println(LocalDateTime.now() + "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            request.setEnd(LocalDateTime.now());
-            System.out.println(request);
-            requests.add(request);
-            new RequestDaoImpl().updateRequest(request);
-            OperatorRequests.removeRequest(request);
+    public synchronized void run() {
+        switch (department) {
+            case RECEPTION:
+                OperatorO.Operator().receptionistProcesses(this);
+                break;
+            case HOUSE_KEEPING:
+                OperatorO.Operator().chambermaidProcesses();
+                break;
+            case MAINTENANCE:
+                OperatorO.Operator().technicianProcesses();
+                break;
+            default:
+                break;
         }
     }
 
-    @Override
-    public void handleRequest() {
-        request.setEmployee(this);
-    }
-
-    public LocalDateTime getLastUpdated() {
-        return requests.get(requests.size() - 1).getEnd();
-    }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "department=" + department +
-                '}';
-    }
 }
