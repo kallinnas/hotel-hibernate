@@ -26,7 +26,6 @@ public class WaitNotify {
             while (true) {
                 synchronized (list) {
                     list.add(sc.nextLine());
-//                    list.add(new Request());
                     list.notify();
                 }
                 Thread.sleep(5);

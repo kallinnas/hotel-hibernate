@@ -51,6 +51,7 @@ public class Person {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    /* EMPLOYEE */
     public Person(String firstName, String lastName, String email,
                   double account, Department department) {
         this.id = 0;
@@ -63,6 +64,7 @@ public class Person {
         ((Employee)this.client).setDepartment(department);
     }
 
+    /* GUEST */
     public Person(String firstName, String lastName, String email,
                   double account, boolean clubMember) {
         this.id = 0;

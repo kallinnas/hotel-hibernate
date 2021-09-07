@@ -16,7 +16,7 @@ public class RoomServiceImpl implements RoomService {
     private RoomDao roomDao = new RoomDaoImpl();
 
     @Override
-    public Room getSuitableRoom(Reservation reservation) {
+    public Room getSuitableRoomForReservation(Reservation reservation) {
         val room = getRoomsByReservationPrice(reservation)
                 .stream()
                 .reduce((result, current) ->

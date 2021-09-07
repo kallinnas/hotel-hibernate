@@ -21,6 +21,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
             transaction = session.beginTransaction();
             return session.get(Employee.class, id);
         } finally {
+            transaction.commit();
             session.close();
         }
     }
@@ -31,8 +32,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
         try {
             transaction = session.beginTransaction();
             session.update(employee);
-            transaction.commit();
         } finally {
+            transaction.commit();
             session.close();
         }
     }
@@ -43,8 +44,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
         try {
             transaction = session.beginTransaction();
             session.persist(employee);
-            transaction.commit();
         } finally {
+            transaction.commit();
             session.close();
         }
     }
@@ -70,19 +71,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
             return session.createQuery(HQLSchema.SELECT_FREE_EMPLOYEE, Employee.class)
                     .setMaxResults(1).uniqueResult();
         } finally {
+            transaction.commit();
             session.close();
         }
     }
 
-
-//    @Override
-//    public SynchronousQueue<Employee> initialEmployeeQueue() {
-//        SynchronousQueue<Employee> employees = new SynchronousQueue<>();
-//        for (Employee e : getAllEmployees()) {
-//            employees.offer(e);
-//        }
-//        return employees;
-//    }
 
 
 }

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.val;
 import model.Request;
+import model.RequestType;
 import model.Reservation;
 import model.Room;
 import service.*;
@@ -19,22 +20,20 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 public class OperatorO {
     /* SINGLETON */
-    private static OperatorO instance = null;
+    private volatile static OperatorO instance = null;
 
     /* THREAD EXECUTOR */
-    private ExecutorService executorService;
+    private volatile ExecutorService executorService;
 
     /* SERVICES */
-    private ReservationService reservationService;
-    private EmployeeService employeeService;
-    private RequestService requestService;
-    private GuestService guestService;
-    private RoomService roomService;
+    private volatile ReservationService reservationService;
+    private volatile EmployeeService employeeService;
+    private volatile RequestService requestService;
+    private volatile GuestService guestService;
+    private volatile RoomService roomService;
 
-    public static OperatorO Operator() {
-        if (instance == null) return instance = new OperatorO();
-        else return instance;
-    }
+//    private List<Request> requests;
+    private volatile Employee employee;
 
     private OperatorO() {
         this.roomService = new RoomServiceImpl();
@@ -43,29 +42,34 @@ public class OperatorO {
         this.employeeService = new EmployeeServiceImpl();
         this.reservationService = new ReservationServiceImpl();
         this.executorService = new ThreadPoolExecutor(
-                6, 6, 0L,
+                10, 10, 0L,
                 TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
     }
 
+    public static OperatorO Operator() {
+        if (instance == null) return instance = new OperatorO();
+        else return instance;
+    }
+
     @SneakyThrows
-    public synchronized void processRequests() {
+    public synchronized void distributionAndRequestProcessing() {
         Request request = requestService.getTheOldestUndoneRequest();
         while (request != null) {
             switch (request.getType().department) {
                 case RECEPTION:
-                    executorService.execute(employeeService.setRequestOnEmployee(request));
+                    employee = employeeService.setRequestOnEmployee(request);
+                    executorService.execute(employee);
                     request = requestService.getTheOldestUndoneRequest();
                     break;
                 case HOUSE_KEEPING:
-                    executorService.execute(notifyHouseKeeping(request));
+//                    executorService.execute(notifyHouseKeeping(theOldestUndoneRequest));
                     break;
                 case MAINTENANCE:
-                    executorService.execute(notifyMaintenance(request));
+//                    executorService.execute(notifyMaintenance(theOldestUndoneRequest));
                     break;
                 default:
                     break;
             }
-
         }
         executorService.shutdown();
     }
@@ -81,13 +85,13 @@ public class OperatorO {
 
     public synchronized void receptionistProcesses(Employee employee) {
         Request request = employee.getRequest();
+
         Reservation reservation = request.getReservation();
-        Room room = roomService.getSuitableRoom(reservation);
+        Room room = roomService.getSuitableRoomForReservation(reservation);
         reservation.setRoom(room); // must goes before createAndReturnGuest()
         val guest = createAndReturnGuest(reservation);
 
-        val empPerson = employeeService.getPersonByEmployeeId(employee.getId());
-        val guestPerson = employeeService.getPersonByGuestId(guest.getId());
+        showCheckInMessage(employee.getId(), guest.getId(), request.getType());
 
         /* Reservation setters */
         reservation.setPrice(room.getPrice());
@@ -97,32 +101,33 @@ public class OperatorO {
         guest.setRoom(room);
         request.setRoom(room);
 
-        System.out.println(String.format("Employee %s %s start process under %s request for " +
-                        "guest %s %s. It will take %d seconds to finish.",
-                empPerson.getFirstName(), empPerson.getLastName(), request.getType().name,
-                guestPerson.getFirstName(), guestPerson.getLastName(), request.getType().timeLimit / 1000));
         try {
-            Thread.sleep(request.getType().timeLimit / 4);
-            System.out.println(Thread.activeCount());
-            System.out.println(Thread.currentThread().getName());
-
+            Thread.sleep(request.getType().requiredTimeToCompleteRequest / 4);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         val now = LocalDateTime.now();
-        request.setEmployee(employee);
         request.setCompletionTime(now);
         reservation.setCheckIn(now);
 
-        employee.setRequest(request);
+//        employee.setRequest(request);
         guestService.update(guest);
         roomService.update(room);
         reservationService.update(reservation);
         requestService.updateRequest(request);
         employee.setWorking(false);
         employeeService.update(employee);
-        processRequests();
+//        distributionAndRequestProcessing();
+    }
+
+    private void showCheckInMessage(long employeeId, long guestId, RequestType requestType) {
+        val empPerson = employeeService.getPersonByEmployeeId(employeeId);
+        val guestPerson = employeeService.getPersonByGuestId(guestId);
+        System.out.println(String.format("Employee %s %s start process under %s request for " +
+                        "guest %s %s. It will take %d seconds to finish.",
+                empPerson.getFirstName(), empPerson.getLastName(), requestType.name,
+                guestPerson.getFirstName(), guestPerson.getLastName(), requestType.requiredTimeToCompleteRequest / 1000));
     }
 
 

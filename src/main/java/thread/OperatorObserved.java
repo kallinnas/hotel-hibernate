@@ -39,7 +39,7 @@ public class OperatorObserved {
             if (request != null) {
                 request.setEmployee(employee);
                 val res = request.getReservation();
-                val room = roomService.getSuitableRoom(res);
+                val room = roomService.getSuitableRoomForReservation(res);
                 room.setStatus(RoomStatus.OCCUPIED);
                 if (guestService.isNotExistGuest(res.getEmail())) {
                     guestService.createGuest(res.getFirstName(), res.getLastName(),
@@ -64,8 +64,8 @@ public class OperatorObserved {
                     System.out.println(String.format("Employee %s %s start process under %s request for " +
                                     "guest %s %s. It will take %d seconds to finish.",
                             empPerson.getFirstName(), empPerson.getLastName(), request.getType().name,
-                            guestPerson.getFirstName(), guestPerson.getLastName(), request.getType().timeLimit / 1000));
-                    Thread.sleep(request.getType().timeLimit / 10);
+                            guestPerson.getFirstName(), guestPerson.getLastName(), request.getType().requiredTimeToCompleteRequest / 1000));
+                    Thread.sleep(request.getType().requiredTimeToCompleteRequest / 10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -47,21 +47,39 @@ public class EmployeeServiceImpl implements EmployeeService {
     @SneakyThrows
     @Override
     public synchronized Employee setRequestOnEmployee(Request request) {
-        Employee emp = null;
-        while (emp == null) {
-            emp = employeeDao.getFreeEmployee(request.getType().department);
-            if (emp != null) {
-                request.setEmployee(emp);
+        Employee employee = null;
+        while (employee == null) {
+            employee = employeeDao.getFreeEmployee(request.getType().department);
+            if (employee != null) {
+                request.setEmployee(employee);
                 requestDao.updateRequest(request);
-                emp.setRequest(request);
-                emp.setWorking(true);
-                employeeDao.update(emp);
+                employee.setRequest(request);
+                employee.setWorking(true);
+                employeeDao.update(employee);
             } else {
                 Thread.currentThread().wait();
             }
         }
-        return emp;
+        return employee;
     }
+//    @SneakyThrows
+//    @Override
+//    public synchronized Employee setRequestOnEmployee(Request request) {
+//        Employee employee = null;
+//        while (employee == null) {
+//            employee = employeeDao.getFreeEmployee(request.getType().department);
+//            if (employee != null) {
+//                request.setEmployee(employee);
+//                requestDao.updateRequest(request);
+//                employee.setRequest(request);
+//                employee.setWorking(true);
+//                employeeDao.update(employee);
+//            } else {
+//                Thread.yield();
+//            }
+//        }
+//        return employee;
+//    }
 
     @Override
     public void update(Employee employee) {

@@ -65,7 +65,7 @@ public class RequestDaoImpl implements RequestDao {
     }
 
     @Override
-    public Request getTheOldestUndoneRequest() {
+    public synchronized Request getTheOldestUndoneRequest() {
         session = HibernateUtils.getHibernateSession().getSession();
         try {
             transaction = session.beginTransaction();

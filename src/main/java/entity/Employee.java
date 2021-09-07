@@ -9,6 +9,7 @@ import operator.OperatorO;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Data
 @Entity
@@ -16,6 +17,18 @@ import java.util.List;
 @Table(name = "employees")
 @EqualsAndHashCode(callSuper = true)
 public class Employee extends Client implements Runnable{
+
+    @Transient
+    private final Object lock = new Object();
+    @Transient
+    private final AtomicBoolean shouldWait = new AtomicBoolean();
+
+    public void disable() {
+        shouldWait.set(false);
+    }
+    public void enable() {
+        shouldWait.set(true);
+    }
 
     private long id;
     @NotNull(message = "Department must be set!")
@@ -40,7 +53,7 @@ public class Employee extends Client implements Runnable{
     }
 
     @Override
-    public synchronized void run() {
+    public void run() {
         switch (department) {
             case RECEPTION:
                 OperatorO.Operator().receptionistProcesses(this);

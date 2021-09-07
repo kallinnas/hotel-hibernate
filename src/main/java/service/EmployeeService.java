@@ -18,7 +18,7 @@ public interface EmployeeService {
 
     Person getPersonByGuestId(long id);
 
-    Employee setRequestOnEmployee(Request request) throws InterruptedException;
+    Employee setRequestOnEmployee(Request request);
 
     void update(Employee employee);
 

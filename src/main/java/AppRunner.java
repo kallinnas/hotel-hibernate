@@ -1,7 +1,7 @@
 import operator.OperatorO;
 
 public class AppRunner {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         Emulator emulator = new Emulator();
         emulator.dropTables();
         emulator.emulateEmployees();
@@ -9,10 +9,7 @@ public class AppRunner {
         emulator.emulateReservations();
 
 
-//        EmployeeDao dao = new EmployeeDaoImpl();
-//        System.out.println(dao.hasSuitableEmployee(new RequestDaoImpl().getLastCreatedRequest()));
-
-        OperatorO.Operator().processRequests();
+        OperatorO.Operator().distributionAndRequestProcessing();
 
 
 

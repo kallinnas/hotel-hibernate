@@ -11,13 +11,13 @@ public enum RequestType {
     public final String name;
     public final Department department;
     public final double price;
-    public final int timeLimit;
+    public final int requiredTimeToCompleteRequest;
 
     // modifier 'private' is redundant for enum constructor
-    RequestType(String name, Department department, double price, int timeLimit) {
+    RequestType(String name, Department department, double price, int requiredTimeToCompleteRequest) {
         this.name = name;
         this.department = department;
         this.price = price;
-        this.timeLimit = timeLimit;
+        this.requiredTimeToCompleteRequest = requiredTimeToCompleteRequest;
     }
 }
