@@ -44,13 +44,13 @@ public class ReservationDaoImpl implements ReservationDao {
     }
 
     @Override
-    public void updateReservation(Reservation reservation) {
+    public synchronized void updateReservation(Reservation reservation) {
         session = HibernateUtils.getHibernateSession();
         try {
             transaction = session.beginTransaction();
             session.update(reservation);
-            transaction.commit();
         } finally {
+            transaction.commit();
             session.close();
         }
     }

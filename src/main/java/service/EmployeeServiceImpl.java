@@ -7,7 +7,9 @@ import lombok.SneakyThrows;
 import model.Department;
 import model.Request;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.SynchronousQueue;
 
 public class EmployeeServiceImpl implements EmployeeService {
@@ -44,16 +46,26 @@ public class EmployeeServiceImpl implements EmployeeService {
         return personDao.getPersonByGuestId(id);
     }
 
+    @Override
+    public Queue<Employee> getAllReceptionists() {
+        return new LinkedList<>(employeeDao.getAllReceptionists());
+    }
+
+    @Override
+    public int getAmountOfReceptionists() {
+        return employeeDao.getAmountOfReceptionists();
+    }
+
     @SneakyThrows
     @Override
-    public synchronized Employee setRequestOnEmployee(Request request) {
+    public Employee setRequestOnEmployee(Request request) {
         Employee employee = null;
         while (employee == null) {
             employee = employeeDao.getFreeEmployee(request.getType().department);
             if (employee != null) {
                 request.setEmployee(employee);
                 requestDao.updateRequest(request);
-                employee.setRequest(request);
+//                employee.setRequest(request);
                 employee.setWorking(true);
                 employeeDao.update(employee);
             } else {

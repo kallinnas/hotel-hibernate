@@ -76,6 +76,33 @@ public class EmployeeDaoImpl implements EmployeeDao {
         }
     }
 
+    @Override
+    public int getAmountOfReceptionists() {
+        session = HibernateUtils.getHibernateSession();
+        try {
+            transaction = session.beginTransaction();
+            return  session.createQuery(HQLSchema.SELECT_AMOUNT_OF_RECEPTIONISTS)
+                    .setParameter("department", Department.RECEPTION).getFirstResult();
+        } finally {
+            transaction.commit();
+            session.close();
+        }
+    }
+
+    @Override
+    public List<Employee> getAllReceptionists() {
+        session = HibernateUtils.getHibernateSession();
+        try{
+            transaction = session.beginTransaction();
+            List list = session.createQuery(HQLSchema.SELECT_ALL_RECEPTIONISTS)
+                    .setParameter("receptionists", Department.RECEPTION)
+                    .getResultList();
+            return new ArrayList<Employee>(list);
+        }finally {
+            transaction.commit();
+            session.close();
+        }
+    }
 
 
 }

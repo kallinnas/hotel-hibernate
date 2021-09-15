@@ -32,7 +32,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public void update(Room room) {
+    public synchronized void update(Room room) {
         roomDao.update(room);
     }
 

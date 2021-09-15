@@ -53,7 +53,7 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public void update(Room room) {
+    public synchronized void update(Room room) {
         session = HibernateUtils.getHibernateSession();
         try{
             transaction = session.beginTransaction();

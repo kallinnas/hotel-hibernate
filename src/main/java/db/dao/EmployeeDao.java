@@ -16,4 +16,7 @@ public interface EmployeeDao {
 
     Employee getFreeEmployee(Department department);
 
+    int getAmountOfReceptionists();
+
+    List<Employee> getAllReceptionists();
 }

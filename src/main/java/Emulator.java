@@ -46,66 +46,66 @@ public class Emulator {
                 "vr@gmail.com", true, 1200,
                 LocalDateTime.of(2021, 7, 15, 14, 14, 38),
                 LocalDateTime.of(2021, 7, 17, 20, 0, 38));
-
-        reservationService.createReservation("Victoria", "Kalinichenko",
-                "vyusp@gmail.com", true, 1200,
-                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
-                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
-
-        reservationService.createReservation("Serhii", "Savchenko",
-                "sava@gmail.com", true, 1200,
-                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
-                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
-
-        reservationService.createReservation("Eugine", "Logochev",
-                "eug@gmail.com", true, 1200,
-                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
-                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
-
-        reservationService.createReservation("Lesya", "Logocheva",
-                "les@gmail.com", true, 1200,
-                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
-                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
-
-        reservationService.createReservation("Ann", "Za",
-                "za@gmail.com", true, 1200,
-                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
-                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
-
-        reservationService.createReservation("Alex", "Zhuravlev",
-                "goose@gmail.com", true, 1200,
-                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
-                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
-
-        reservationService.createReservation("Clark", "Kent",
-                "super@gmail.com", true, 1200,
-                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
-                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
-
-        reservationService.createReservation("Peter", "Parker",
-                "spidy@gmail.com", true, 1200,
-                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
-                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
-
-        reservationService.createReservation("Bruce", "Wayne",
-                "bat@gmail.com", true, 1200,
-                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
-                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
-
-        reservationService.createReservation("Bella", "Donna",
-                "maria@gmail.com", true, 1200,
-                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
-                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
-
-        reservationService.createReservation("Nikola", "Tesla",
-                "tesla@gmail.com", true, 1200,
-                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
-                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
-
-        reservationService.createReservation("Bill", "Murray",
-                "rock@gmail.com", true, 1200,
-                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
-                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
+//
+//        reservationService.createReservation("Victoria", "Kalinichenko",
+//                "vyusp@gmail.com", true, 1200,
+//                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
+//                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
+//
+//        reservationService.createReservation("Serhii", "Savchenko",
+//                "sava@gmail.com", true, 1200,
+//                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
+//                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
+//
+//        reservationService.createReservation("Eugine", "Logochev",
+//                "eug@gmail.com", true, 1200,
+//                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
+//                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
+//
+//        reservationService.createReservation("Lesya", "Logocheva",
+//                "les@gmail.com", true, 1200,
+//                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
+//                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
+//
+//        reservationService.createReservation("Ann", "Za",
+//                "za@gmail.com", true, 1200,
+//                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
+//                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
+//
+//        reservationService.createReservation("Alex", "Zhuravlev",
+//                "goose@gmail.com", true, 1200,
+//                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
+//                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
+//
+//        reservationService.createReservation("Clark", "Kent",
+//                "super@gmail.com", true, 1200,
+//                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
+//                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
+//
+//        reservationService.createReservation("Peter", "Parker",
+//                "spidy@gmail.com", true, 1200,
+//                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
+//                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
+//
+//        reservationService.createReservation("Bruce", "Wayne",
+//                "bat@gmail.com", true, 1200,
+//                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
+//                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
+//
+//        reservationService.createReservation("Bella", "Donna",
+//                "maria@gmail.com", true, 1200,
+//                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
+//                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
+//
+//        reservationService.createReservation("Nikola", "Tesla",
+//                "tesla@gmail.com", true, 1200,
+//                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
+//                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
+//
+//        reservationService.createReservation("Bill", "Murray",
+//                "rock@gmail.com", true, 1200,
+//                LocalDateTime.of(2021, 7, 15, 14, 14, 38),
+//                LocalDateTime.of(2021, 7, 17, 20, 0, 38));
     }
 
     public  void emulateEmployees() {
@@ -115,8 +115,8 @@ public class Emulator {
                 100, Department.RECEPTION);
         employeeService.createEmployee("Ramzi", "Alayan", "ramz@kd.il",
                 100, Department.RECEPTION);
-        employeeService.createEmployee("Karim", "Yahya", "kar@kd.il",
-                100, Department.RECEPTION);
+//        employeeService.createEmployee("Karim", "Yahya", "kar@kd.il",
+//                100, Department.RECEPTION);
     }
 
     public void emulateRooms() {

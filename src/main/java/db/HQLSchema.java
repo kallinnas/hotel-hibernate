@@ -71,6 +71,13 @@ public class HQLSchema {
     public static final String SELECT_FREE_EMPLOYEE = "FROM " + TABLE_EMPLOYEE +
             " WHERE " + COL_IS_WORKING + "=0";
 
+    /* RECEPTIONIST */
+    public static final String SELECT_AMOUNT_OF_RECEPTIONISTS = "SELECT COUNT(*) FROM " + TABLE_EMPLOYEE +
+            " e WHERE e." + COL_DEPARTMENT+"=:department";
+
+    public static final String SELECT_ALL_RECEPTIONISTS = "FROM " + TABLE_EMPLOYEE +
+            " WHERE " + COL_DEPARTMENT + "=:receptionists";
+
     /* ROOM */
     public static final String SELECT_VC_ROOMS = "FROM " + TABLE_ROOM +
             " WHERE " + COL_STATUS + "= :vc";

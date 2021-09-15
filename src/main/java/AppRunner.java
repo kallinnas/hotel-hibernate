@@ -8,10 +8,8 @@ public class AppRunner {
         emulator.emulateRooms();
         emulator.emulateReservations();
 
-
+        System.out.println("***************************************");
         OperatorO.Operator().distributionAndRequestProcessing();
-
-
 
 
 

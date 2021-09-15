@@ -6,14 +6,13 @@
 
     <session-factory>
 
-        <!-- JDBC DB connection settings -->
+        <!-- JDBC connection settings -->
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="connection.url">jdbc:mysql://localhost:3306/hotel?allowMultiQueries=true</property>
         <property name="connection.username">root</property>
         <property name="connection.password">1936</property>
 
-
-        <property name="connection.pool_size">10</property>
+        <property name="connection.pool_size">5000</property>
         <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
         <property name="show_sql">true</property>
         <!-- Bind a session to the thread from which it was opened -->
@@ -22,9 +21,6 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <!-- Beautify -->
         <property name="format_sql">true</property>
-
-
-
 
     </session-factory>
 

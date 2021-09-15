@@ -22,7 +22,7 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public synchronized Request getTheOldestUndoneRequest() {
+    public Request getTheOldestUndoneRequest() {
         return requestDao.getTheOldestUndoneRequest();
     }
 

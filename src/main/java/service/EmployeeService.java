@@ -6,6 +6,7 @@ import model.Department;
 import model.Request;
 
 import java.util.List;
+import java.util.Queue;
 
 public interface EmployeeService {
 
@@ -23,4 +24,8 @@ public interface EmployeeService {
     void update(Employee employee);
 
     Employee getEmployeeById(long id);
+
+    Queue<Employee> getAllReceptionists();
+
+    int getAmountOfReceptionists();
 }
